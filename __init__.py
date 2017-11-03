@@ -149,7 +149,7 @@ class CBDB(Source):
                         log.error('Incorrect document structure 1')
                         return
 
-                    idxe = vld.find('</h3>', idxs)
+                    idxe = vld.find('</h2>', idxs)
                     if (idxe == -1):
                         log.error('Incorrect document structure 2')
                         return
