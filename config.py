@@ -9,12 +9,20 @@ __docformat__ = 'restructuredtext cs'
 
 import copy
 from functools import partial
-from PyQt4 import QtGui
-from PyQt4.Qt import (QTableWidgetItem, QVBoxLayout, Qt, QGroupBox, QTableWidget,
-                      QCheckBox, QAbstractItemView, QHBoxLayout, QIcon,
-                      QInputDialog)
+try:
+    from PyQt4 import QtGui
+except ImportError:
+    from PyQt5 import Qt as QtGui
+try:
+    from PyQt4.Qt import (QTableWidgetItem, QVBoxLayout, Qt, QGroupBox, QTableWidget,
+                          QCheckBox, QAbstractItemView, QHBoxLayout, QIcon,
+                          QInputDialog)
+except ImportError:
+    from PyQt5.Qt import (QTableWidgetItem, QVBoxLayout, Qt, QGroupBox, QTableWidget,
+                          QCheckBox, QAbstractItemView, QHBoxLayout, QIcon,
+                          QInputDialog)
 from calibre.gui2 import get_current_db, question_dialog, error_dialog
-from calibre.gui2.complete import MultiCompleteLineEdit
+from calibre.gui2.complete2 import EditWithComplete
 from calibre.gui2.metadata.config import ConfigWidget as DefaultConfigWidget
 from calibre.utils.config import JSONConfig
 
@@ -135,7 +143,7 @@ class GenreTagMappingsTableWidget(QTableWidget):
         self.setCellWidget(row, 1, self.create_tags_edit(tags_value, row))
 
     def create_tags_edit(self, value, row):
-        tags_edit = MultiCompleteLineEdit(self)
+        tags_edit = EditWithComplete(self)
         tags_edit.set_add_separator(False)
         tags_edit.update_items_cache(self.tags_values)
         tags_edit.setText(value)

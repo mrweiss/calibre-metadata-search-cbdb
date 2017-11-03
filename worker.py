@@ -332,10 +332,10 @@ class Worker(Thread): # Get details
             # <div id="releases">
             #  <table>
             #   <tr>
-            #   <td><strong>Nakladatelství&nbsp;(rok)</strong></td>
+            #   <td><strong>Nakladatelstvï¿½&nbsp;(rok)</strong></td>
             #   <td><strong>ISBN</strong></td>
             #   <td><strong>Pocet&nbsp;stran</strong></td>
-            #   <td><strong>Poznámka</strong></td>
+            #   <td><strong>Poznï¿½mka</strong></td>
             #   </tr>
             #   <tr>
             #     <td>
@@ -353,7 +353,7 @@ class Worker(Thread): # Get details
             #   </tr>
             #   <tr>
             #     <td>
-            #       Ceskoslovenský spisovatel
+            #       Ceskoslovenskï¿½ spisovatel
             #       (1970)
             #     </td>
             #     <td>
@@ -365,7 +365,7 @@ class Worker(Thread): # Get details
             #   </tr>
             #   <tr>
             #     <td>
-            #       Štorch-Marien
+            #       ï¿½torch-Marien
             #       (1924)
             #     </td>
             #     <td>
@@ -376,7 +376,7 @@ class Worker(Thread): # Get details
             #     </td>
             #   </tr>
             #   </table>
-            #   <span class="show_covers" onClick="hide_releases();">Skrýt vydání</span><br /><br />
+            #   <span class="show_covers" onClick="hide_releases();">Skrï¿½t vydï¿½nï¿½</span><br /><br />
             # </div>
             #self.log.info(publisher_node.__len__())
             
