@@ -338,13 +338,13 @@ class CBDB(Source):
                 return
 
             # log.info(xresult.__len__())
-            # log.info(xresult[1].xpath('./a')[0].text)
-            # log.info(xresult[2].xpath('./a')[0].text)
+            # log.info(xresult[1].xpath('./a')[0].text_content())
+            # log.info(xresult[3].xpath('./a')[0].text_content())
             # log.info(xresult[0].xpath('./img/@src')[0])
-
-            title = xresult[1].xpath('./a')[0].text_content().strip()
-            authors = xresult[2].xpath(
-                './a')[0].text_content().strip().split(',')
+            title = xresult[1].xpath(
+                './a')[0].text_content().strip().decode('utf-8', errors='replace')
+            authors = xresult[3].xpath(
+                './a')[0].text_content().strip().decode('utf-8', errors='replace').split(',')
             ntitle = self.strip_accents(title)
             nauthors = self.strip_accents(authors)
             #rank = xresult[0].xpath('./img/@src')[0][13]
@@ -353,7 +353,7 @@ class CBDB(Source):
                 if not ismatch(ntitle, nauthors, ntitle_tokens, nauthor_tokens):
                     log.error('Rejecting as not close enough match: %s %s' %
                               (title, authors))
-                    return
+                    continue
 
             xresult_url_node = xresult[1].xpath('./a/@href')
             if xresult_url_node:
