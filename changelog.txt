@@ -1,0 +1,13 @@
+[B]Version 0.0.4[/B] - 23 Jul 2013
+Improved error handling for lost Internet connection
+
+[B]Version 0.0.3[/B] - 22 Jul 2013
+Improved search - if nothing found 
+- second search is with stripped accents
+- third search is with stripped trailing numbers, ie 'Book' instead of 'Book 1'
+
+[B]Version 0.0.2[/B] - 21 Jul 2013
+Added support for titles/names with stripped accents
+
+[B]Version 0.0.1[/B] - 20 Jul 2013
+Initial release of plugin, rewritten from Goodreads plugin
