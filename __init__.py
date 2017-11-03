@@ -144,7 +144,7 @@ class CBDB(Source):
                     # <!DOCTYPE .. <head>
                     hdr = vld[:idxs]
 
-                    idxs = vld.find('<h3>Nalezeno')
+                    idxs = vld.find('<h2>Nalezeno')
                     if (idxs == -1):
                         log.error('Incorrect document structure 1')
                         return
