@@ -116,11 +116,12 @@ class CBDB(Source):
 
             # For ISBN based searches we have already done everything we need to
             # So anything from this point below is for title/author based searches.
-            if not isbn:
+            # CBDB doesn't redirect anymore when there's just one match
+            if not isbn or (isbn and matches.__len__() == 0):
                 try:
                     raw = response.read().strip()
-                    #open('E:\\t.html', 'wb').write(raw)
-                    ###raw = open('S:\\t.html', 'rb').read()
+                    # open('E:\\t.html', 'wb').write(raw)
+                    # raw = open('S:\\t.html', 'rb').read()
                     raw = raw.decode('utf-8', errors='replace')
                     if not raw:
                         log.error(
@@ -216,7 +217,7 @@ class CBDB(Source):
 
             return
 
-        #log.info('Lets process matches ...')
+        # log.info('Lets process matches ...')
         from calibre_plugins.CBDB.worker import Worker
         workers = [Worker(url, result_queue, br, log, i, self)
                    for i, url in enumerate(matches)]
@@ -347,7 +348,7 @@ class CBDB(Source):
                 './a')[0].text_content().strip().decode('utf-8', errors='replace').split(',')
             ntitle = self.strip_accents(title)
             nauthors = self.strip_accents(authors)
-            #rank = xresult[0].xpath('./img/@src')[0][13]
+            # rank = xresult[0].xpath('./img/@src')[0][13]
 
             if not ismatch(title, authors, title_tokens, author_tokens):
                 if not ismatch(ntitle, nauthors, ntitle_tokens, nauthor_tokens):
@@ -385,7 +386,7 @@ class CBDB(Source):
                 log.error('Failed to get raw result for query: %r' %
                           editions_url)
                 return
-            #open('E:\\s.html', 'wb').write(raw)
+            # open('E:\\s.html', 'wb').write(raw)
             root = fromstring(clean_ascii_chars(raw))
         except:
             msg = 'Failed to parse CBDB page for query: %r' % editions_url
