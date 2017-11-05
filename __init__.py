@@ -100,7 +100,7 @@ class CBDB(Source):
                     # If we did, will use the url.
                     # If we didn't then treat it as no matches on CBDB
                     location = response.geturl()
-                    if '/book/show/' in location:
+                    if '/kniha-' in location:
                         log.info('ISBN match location: %r' % location)
                         matches.append(location)
             except IOError as e:
@@ -197,8 +197,12 @@ class CBDB(Source):
 
                 # Now grab values from the search results, provided the
                 # title and authors appear to be for the same book
-                self._parse_search_results(
-                    log, title, authors, root, matches, timeout)
+                # isnb of course will only have one result
+                if isbn:
+                    self._parse_isbn_search_results(log, root, matches)
+                else:
+                    self._parse_search_results(
+                        log, title, authors, root, matches, timeout)
 
         if abort.is_set():
             return
@@ -248,7 +252,7 @@ class CBDB(Source):
         isbn = check_isbn(identifiers.get('isbn', None))
         q = ''
         if isbn is not None:
-            q = 'isbn=' + isbn
+            q = 'type=book&isbn=' + isbn
         elif title:
             tokens = []
             title_tokens = list(self.get_title_tokens(
@@ -285,6 +289,31 @@ class CBDB(Source):
 
             return li
         return ''.join((c for c in unicodedata.normalize('NFD', inp) if unicodedata.category(c) != 'Mn'))
+
+    def _parse_isbn_search_results(self, log, root, matches):
+        header = root.xpath('//h3')
+        if not header:
+            return
+
+        if (header.__len__() != 1):
+            log.error('Incorrect data structure - hlen - ')
+            log.info(header.__len__())
+            return
+
+        cnt = int(header[0].text)
+        if (cnt != 1):
+            log.error('Incorrect number of results for ISBN search, should be 1')
+            log.info(cnt)
+            return
+
+        xresult = root.xpath('//table/tr/td')
+        if not xresult:
+            return
+        xresult_url_node = xresult[1].xpath('./a/@href')
+        if xresult_url_node:
+            result_url = BASE_URL + '/' + xresult_url_node[0]
+            log.info('RURL ' + result_url)
+            matches.append(result_url)
 
     def _parse_search_results(self, log, orig_title, orig_authors, root, matches, timeout):
         header = root.xpath('//h3')
