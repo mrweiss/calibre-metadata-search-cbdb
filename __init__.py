@@ -35,7 +35,7 @@ class CBDB(Source):
     description = _('Downloads metadata and covers from CBDB')
     author = 'Ignac Cerda'
     version = (0, 0, 5)
-    minimum_calibre_version = (0, 8, 0)
+    minimum_calibre_version = (2, 0, 0)
 
     capabilities = frozenset(['identify', 'cover'])
     touched_fields = frozenset(['title', 'authors', 'identifier:cbdb',
